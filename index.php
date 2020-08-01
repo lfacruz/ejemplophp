@@ -19,8 +19,21 @@ if(isset($_POST["usuario"]) && isset($_POST["clave"])){
 	if ($result->num_rows > 0) {
 		session_start();
 		$_SESSION["usuario"]=$usuario;
-		$sql = "insert into sesion(usuario,identificador,fecha_ingreso,activo) values('".$usuario."','".session_id()."',NOW(),1);";
-		$conn->query($sql);
+		if ($result) {
+		}
+	}
+	$conn->close();
+        if(isset($_SESSION["usuario"])){
+		$conn = mysqli_connect($servername, $username, $password);
+
+        	if (!$conn) {
+                	die("Fallo conectarse por: " . mysqli_connect_error());
+        	}
+
+		$sql = "insert into dw.sesion(usuario,identificador,fecha_ingreso,activo) values('".$usuario."','".session_id()."',NOW(),1);";
+                if ($conn->query($sql) === TRUE) {
+		}
+                $conn->close();
 	}
 } 
 ?>
